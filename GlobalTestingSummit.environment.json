@@ -1,0 +1,129 @@
+{
+	"id": "63dcdb8f-8127-4271-9558-8aaf17596e7a",
+	"name": "Contact List API Environment",
+	"values": [
+		{
+			"key": "url",
+			"value": "https://thinking-tester-contact-list.herokuapp.com",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "firstName",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "lastName",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "email",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "userId",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "token",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "password",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "tokenNotFound",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "contactId",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "email2",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "password2",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "userId2",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "token2",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "email1",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "password1",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "userId1",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "token1",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "contactId1",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "contactId2",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "newFirstName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "newLastName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "newEmail",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "newPassword",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2022-11-05T01:03:25.922Z",
+	"_postman_exported_using": "Postman/10.0.42"
+}
