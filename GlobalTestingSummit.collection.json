@@ -1389,281 +1389,6 @@
 					]
 				},
 				{
-					"name": "Get Contact",
-					"item": [
-						{
-							"name": "Setup: Add Contact",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"var jsonData = pm.response.json();",
-											"pm.environment.set(\"contactId\", jsonData._id);",
-											"pm.test(\"Status code is 201\", function () {",
-											"    pm.response.to.have.status(201);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{token}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"firstName\": \"Prunella\",\n    \"lastName\": \"Prunewhip\",\n    \"birthdate\": \"1969-12-13\",\n    \"email\": \"kristinmjackvony@gmail.com\",\n    \"phone\": \"9789872518\",\n    \"street1\": \"14 Jenna Ct.\",\n    \"street2\": \"Apartment Q\",\n    \"city\": \"North Scituate\",\n    \"stateProvince\": \"RI\",\n    \"postalCode\": \"02857\",\n    \"country\": \"USA\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{url}}/contacts",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"contacts"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Missing Token",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 401\", function () {",
-											"    pm.response.to.have.status(401);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{url}}/contacts/{{contactId}}",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"contacts",
-										"{{contactId}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Token Not Found",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 401\", function () {",
-											"    pm.response.to.have.status(401);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{tokenNotFound}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{url}}/contacts/{{contactId}}",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"contacts",
-										"{{contactId}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Invalid Token",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 401\", function () {",
-											"    pm.response.to.have.status(401);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer FOO",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{url}}/contacts/{{contactId}}",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"contacts",
-										"{{contactId}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Invalid Contact Id",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 400\", function () {",
-											"    pm.response.to.have.status(400);",
-											"});",
-											"pm.test(\"Invalid contact ID error message is correct\", function () {",
-											"    pm.response.to.have.body(\"Invalid Contact ID\");",
-											"});",
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{token}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{url}}/contacts/foobar",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"contacts",
-										"foobar"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Contact Id Not Found",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 404\", function () {",
-											"    pm.response.to.have.status(404);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{token}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{url}}/contacts/6008c8d653599c2dcf4407f0",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"contacts",
-										"6008c8d653599c2dcf4407f0"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Cleanup: Delete Contact",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});",
-											"pm.test(\"Deletion success message received\", function () {",
-											"    pm.response.to.have.body(\"Contact deleted\");",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{token}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{url}}/contacts/{{contactId}}",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"contacts",
-										"{{contactId}}"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
 					"name": "Update Contact",
 					"item": [
 						{
@@ -1694,7 +1419,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"firstName\": \"Prunella\",\n    \"lastName\": \"Prunewhip\",\n    \"birthdate\": \"1969-12-13\",\n    \"email\": \"kristinmjackvony@gmail.com\",\n    \"phone\": \"9789872518\",\n    \"street1\": \"14 Jenna Ct.\",\n    \"street2\": \"Apartment Q\",\n    \"city\": \"North Scituate\",\n    \"stateProvince\": \"RI\",\n    \"postalCode\": \"02857\",\n    \"country\": \"USA\"\n}",
+									"raw": "{\n    \"firstName\": \"Prunella\",\n    \"lastName\": \"Prunewhip\",\n    \"birthdate\": \"1977-07-07\",\n    \"email\": \"pprunewhip@fake.com\",\n    \"phone\": \"8005551000\",\n    \"street1\": \"123 Main St.\",\n    \"street2\": \"Apartment Q\",\n    \"city\": \"New York\",\n    \"stateProvince\": \"NY\",\n    \"postalCode\": \"12345\",\n    \"country\": \"USA\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2719,194 +2444,6 @@
 									"path": [
 										"contacts",
 										"{{contactId}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Cleanup: Delete Contact",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});",
-											"pm.test(\"Deletion success message received\", function () {",
-											"    pm.response.to.have.body(\"Contact deleted\");",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{token}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{url}}/contacts/{{contactId}}",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"contacts",
-										"{{contactId}}"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Delete Contact",
-					"item": [
-						{
-							"name": "Setup: Add Contact",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"var jsonData = pm.response.json();",
-											"pm.environment.set(\"contactId\", jsonData._id);",
-											"pm.test(\"Status code is 201\", function () {",
-											"    pm.response.to.have.status(201);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{token}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"firstName\": \"Prunella\",\n    \"lastName\": \"Prunewhip\",\n    \"birthdate\": \"1969-12-13\",\n    \"email\": \"kristinmjackvony@gmail.com\",\n    \"phone\": \"9789872518\",\n    \"street1\": \"14 Jenna Ct.\",\n    \"street2\": \"Apartment Q\",\n    \"city\": \"North Scituate\",\n    \"stateProvince\": \"RI\",\n    \"postalCode\": \"02857\",\n    \"country\": \"USA\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{url}}/contacts",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"contacts"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Invalid Contact Id",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 400\", function () {",
-											"    pm.response.to.have.status(400);",
-											"});",
-											"pm.test(\"Invalid contact ID error message is correct\", function () {",
-											"    pm.response.to.have.body(\"Invalid Contact ID\");",
-											"});",
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{token}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"firstName\": \"Joe\",\n    \"lastName\": \"Schmoe\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{url}}/contacts/foobar",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"contacts",
-										"foobar"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Contact Id Not Found",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 404\", function () {",
-											"    pm.response.to.have.status(404);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{token}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"firstName\": \"Joe\",\n    \"lastName\": \"Schmoe\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{url}}/contacts/6008c8d653599c2dcf4407f0",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"contacts",
-										"6008c8d653599c2dcf4407f0"
 									]
 								}
 							},
@@ -4008,7 +3545,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n    \"firstName\": \"Prunella\",\n    \"lastName\": \"Prunewhip\",\n    \"birthdate\": \"1969-12-13\",\n    \"email\": \"kristinmjackvony@gmail.com\",\n    \"phone\": \"9789872518\",\n    \"street1\": \"14 Jenna Ct.\",\n    \"street2\": \"Apartment Q\",\n    \"city\": \"North Scituate\",\n    \"stateProvince\": \"RI\",\n    \"postalCode\": \"02857\",\n    \"country\": \"USA\"\n}",
+											"raw": "{\n    \"firstName\": \"Prunella\",\n    \"lastName\": \"Prunewhip\",\n    \"birthdate\": \"1977-07-07\",\n    \"email\": \"pprunewhip@fake.com\",\n    \"phone\": \"8005551000\",\n    \"street1\": \"123 Main St.\",\n    \"street2\": \"Apartment Q\",\n    \"city\": \"New York\",\n    \"stateProvince\": \"NY\",\n    \"postalCode\": \"12345\",\n    \"country\": \"USA\"\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -4205,7 +3742,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n    \"firstName\": \"Prunella\",\n    \"lastName\": \"Prunewhip\",\n    \"birthdate\": \"1969-12-13\",\n    \"email\": \"kristinmjackvony@gmail.com\",\n    \"phone\": \"9789872518\",\n    \"street1\": \"14 Jenna Ct.\",\n    \"street2\": \"Apartment Q\",\n    \"city\": \"North Scituate\",\n    \"stateProvince\": \"RI\",\n    \"postalCode\": \"02857\",\n    \"country\": \"USA\"\n}",
+											"raw": "{\n    \"firstName\": \"Prunella\",\n    \"lastName\": \"Prunewhip\",\n    \"birthdate\": \"1977-07-07\",\n    \"email\": \"pprunewhip@fake.com\",\n    \"phone\": \"8005551000\",\n    \"street1\": \"123 Main St.\",\n    \"street2\": \"Apartment Q\",\n    \"city\": \"New York\",\n    \"stateProvince\": \"NY\",\n    \"postalCode\": \"12345\",\n    \"country\": \"USA\"\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -4429,7 +3966,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n    \"firstName\": \"Prunella\",\n    \"lastName\": \"Prunewhip\",\n    \"birthdate\": \"1969-12-13\",\n    \"email\": \"kristinmjackvony@gmail.com\",\n    \"phone\": \"9789872518\",\n    \"street1\": \"14 Jenna Ct.\",\n    \"street2\": \"Apartment Q\",\n    \"city\": \"North Scituate\",\n    \"stateProvince\": \"RI\",\n    \"postalCode\": \"02857\",\n    \"country\": \"USA\"\n}",
+											"raw": "{\n    \"firstName\": \"Prunella\",\n    \"lastName\": \"Prunewhip\",\n    \"birthdate\": \"1977-07-07\",\n    \"email\": \"pprunewhip@fake.com\",\n    \"phone\": \"8005551000\",\n    \"street1\": \"123 Main St.\",\n    \"street2\": \"Apartment Q\",\n    \"city\": \"New York\",\n    \"stateProvince\": \"NY\",\n    \"postalCode\": \"12345\",\n    \"country\": \"USA\"\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -4650,64 +4187,6 @@
 									"script": {
 										"exec": [
 											"var jsonData = pm.response.json();",
-											"pm.environment.set(\"userId2\", jsonData.user._id)",
-											"pm.environment.set(\"token2\", jsonData.token)",
-											"pm.test(\"Status code is 201\", function () {",
-											"    pm.response.to.have.status(201);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								},
-								{
-									"listen": "prerequest",
-									"script": {
-										"exec": [
-											"pm.environment.set(\"email2\", pm.variables.replaceIn('{{$randomEmail}}').toLowerCase());",
-											"pm.environment.set(\"password2\", pm.variables.replaceIn('{{$randomPassword}}'));"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{token}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"firstName\": \"Test\",\n    \"lastName\": \"User2\",\n    \"email\": \"{{email2}}\",\n    \"password\": \"{{password2}}\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{url}}/users",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"users"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Setup: Add User 2",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"var jsonData = pm.response.json();",
 											"pm.environment.set(\"userId1\", jsonData.user._id)",
 											"pm.environment.set(\"token1\", jsonData.token)",
 											"pm.test(\"Status code is 201\", function () {",
@@ -4740,6 +4219,64 @@
 								"body": {
 									"mode": "raw",
 									"raw": "{\n    \"firstName\": \"Test\",\n    \"lastName\": \"User1\",\n    \"email\": \"{{email1}}\",\n    \"password\": \"{{password1}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/users",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Setup: Add User 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.environment.set(\"userId2\", jsonData.user._id)",
+											"pm.environment.set(\"token2\", jsonData.token)",
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.environment.set(\"email2\", pm.variables.replaceIn('{{$randomEmail}}').toLowerCase());",
+											"pm.environment.set(\"password2\", pm.variables.replaceIn('{{$randomPassword}}'));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"Test\",\n    \"lastName\": \"User2\",\n    \"email\": \"{{email2}}\",\n    \"password\": \"{{password2}}\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -4840,92 +4377,6 @@
 										}
 									}
 								},
-								"url": {
-									"raw": "{{url}}/contacts",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"contacts"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Contact List as User 1",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});",
-											"var jsonData = pm.response.json();",
-											"pm.test(\"One record is returned\", function () {",
-											"    pm.expect(jsonData.length).to.equal(1);",
-											"});",
-											"pm.test(\"ID is correct\", function () {",
-											"    pm.expect(jsonData[0]._id).to.eql(environment.contactId1);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{token1}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{url}}/contacts",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"contacts"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Contact List as User 2",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});",
-											"var jsonData = pm.response.json();",
-											"pm.test(\"One record is returned\", function () {",
-											"    pm.expect(jsonData.length).to.equal(1);",
-											"});",
-											"pm.test(\"ID is correct\", function () {",
-											"    pm.expect(jsonData[0]._id).to.eql(environment.contactId2);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{token2}}",
-										"type": "text"
-									}
-								],
 								"url": {
 									"raw": "{{url}}/contacts",
 									"host": [
@@ -5654,8 +5105,8 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					"pm.test(\"Response time is less than 200ms\", function () {",
-					"    pm.expect(pm.response.responseTime).to.be.below(200);",
+					"pm.test(\"Response time is less than 300ms\", function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(300);",
 					"});"
 				]
 			}
